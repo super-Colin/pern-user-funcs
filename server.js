@@ -32,7 +32,14 @@ app.get('/',(req, res)=>{
 
 app.post('/login', (req, res)=>{
   console.log('login req.body: ', req.body);
-  res.send('login');
+  res.send({
+    success: true,
+  });
+})
+
+app.post('/signup', (req, res)=>{
+  console.log('signup req.body: ', req.body);
+  res.send('signup');
 })
 
 
