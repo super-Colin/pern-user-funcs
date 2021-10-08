@@ -17,8 +17,11 @@ const UserProvider = (props) => {
       //     setUser(user);
       //   }
       // }
-      const hashedPw = crypto.createHash('sha256').update(password).digest('hex');
+      console.log(user, password);
+      const hashedPw = crypto.createHash('sha256').update(user + password).digest('hex');
       console.log(hashedPw);
+      console.log('~~~~~~~~~~~~~~');
+
     }
 
 

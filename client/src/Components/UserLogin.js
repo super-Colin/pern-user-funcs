@@ -10,11 +10,9 @@ const UserLogin = () => {
 
   return (
     <div>
-        <input type="text" placeholder="username" onChange={(e)=>{setUser(e)}} />
-        <input type="text" placeholder="password" onChange={(e)=>{setPassword(e)}} />
-        <button onClick={() => {
-          attemptLogin(user, password)
-        }}>Click me</button>
+        <input type="text" placeholder="username" onChange={(e)=>{setUser(e.target.value)}} />
+        <input type="text" placeholder="password" onChange={(e)=>{setPassword(e.target.value)}} />
+        <button onClick={() => {attemptLogin(user, password)}}>Click me</button>
     </div>
   )
 }
