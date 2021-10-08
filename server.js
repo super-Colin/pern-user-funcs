@@ -4,7 +4,7 @@ if( process.env.NODE_ENV === 'production' ){
   require('dotenv').config();
   console.log('Node Env: ', process.env.NODE_ENV, ' PGUSER: ', process.env.PGUSER);
 }
-
+const PORT = process.env.PORT || 8080;
 
 
 const express = require('express');
@@ -35,12 +35,9 @@ app.post('/login', (req, res)=>{
   res.send('login');
 })
 
-// if( process.env.NODE_ENV === 'production' ){
-//   app.use(express.static(path.join( __dirname, 'client/build')));
-// }else{
-//   app.use(express.static(path.join( __dirname, 'client/build')));
-// } 
 
 
 
-app.listen(process.env.PORT || 8080)
+app.listen(PORT, ()=>{
+  console.log(`listening on port ${PORT}`);
+})
