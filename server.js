@@ -29,6 +29,12 @@ app.get('/',(req, res)=>{
   res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 })
 
+
+app.post('/login', (req, res)=>{
+  console.log('login req.body: ', req.body);
+  res.send('login');
+})
+
 // if( process.env.NODE_ENV === 'production' ){
 //   app.use(express.static(path.join( __dirname, 'client/build')));
 // }else{

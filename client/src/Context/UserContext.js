@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import UserAuth from '../apis/UserAuth';
+import UserAuth from '../apis/UserAuthDev';
 const crypto = require('crypto');
 
 
@@ -11,16 +11,19 @@ const UserProvider = (props) => {
     const [user, setUser] = useState({});
 
     const attemptLogin = (user, password) => {
-      // crypto.pbkdf2(password, user.salt, 100000, 64, 'sha512', (err, derivedKey) => {
-      //   if (derivedKey.toString('hex') === user.password) {
-      //     setIsLoggedIn(true);
-      //     setUser(user);
-      //   }
-      // }
-      console.log(user, password);
-      const hashedPw = crypto.createHash('sha256').update(user + password).digest('hex');
+      // Hash password on client side so we don't send password in plain text ever
+      const hashedPw = crypto.createHash('sha256').update(password).digest('hex'); 
       console.log(hashedPw);
       console.log('~~~~~~~~~~~~~~');
+      try{
+        const response = UserAuth.post('login', {
+          username: user,
+          password: hashedPw
+        })
+        console.log(response);
+      }catch(err){
+        console.log(err);
+      }
 
     }
 
