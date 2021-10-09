@@ -52,7 +52,8 @@ const UserProvider = (props) => {
       <UserContext.Provider value={{
         isLoggedIn,
         user,
-        attemptLogin
+        attemptLogin,
+        attemptSignup
       }}>
         {props.children}
       </UserContext.Provider>
