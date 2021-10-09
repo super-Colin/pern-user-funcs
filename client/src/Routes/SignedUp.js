@@ -1,15 +1,15 @@
 import React from 'react'
 
 import Header from '../Components/Header'
-import UserSignup from '../Components/UserSignUp'
+import AfterSignUp from '../Components/AfterSignUp'
 
-const SignUp = () => {
+const SignedUp = () => {
   return (
     <div>
       <Header />
-      <UserSignup />
+      <AfterSignUp />
     </div>
   )
 }
 
-export default SignUp
+export default SignedUp

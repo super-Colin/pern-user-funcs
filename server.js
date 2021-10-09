@@ -26,7 +26,7 @@ async function checkForTables(){
   const results = await dbPool.query(`
     CREATE TABLE IF NOT EXISTS users (
       email VARCHAR(50) PRIMARY KEY,
-      id SERIAL INT UNIQUE,
+      id SERIAL UNIQUE,
       username VARCHAR(50) NOT NULL,
       password VARCHAR(256) NOT NULL
     );
@@ -47,8 +47,6 @@ checkForTables();
 
 
 
-
-
 app.get('/ping',(req, res)=>{
   res.send('pong');
 })
@@ -61,32 +59,61 @@ app.get('/',(req, res)=>{
 
 app.post('/login', (req, res)=>{
   console.log('login req.body: ', req.body);
+
+  checkUserLogin(req.body.email, req.body.password)
+
+
   res.send({
     success: true,
   });
 })
+
+async function checkUserLogin(userEmail, userPassword){
+  dbPool.query(`
+    SELECT FROM USERS WHERE email = $1 AND password = $2;
+  `, [userEmail, userPassword], (err, results)=>{
+    if(err){
+      console.log('checkUserLogin err: ', err);
+      return false;
+    }
+    console.log('checkUserLogin results: ', results);
+    return results;
+  })
+}
+
+
 
 app.post('/signup', (req, res)=>{
   console.log('signup req.body: ', req.body);
 
   // some kind of email validation...
+
+  // Add user to db
   const results = postSignup(req, res);
   // console.log('results: ', results);
 
+  if(results.rows.length === 0){
+    res.send({
+      success: false,
+      message: 'Email already exists'
+    })
+  }else{
+    res.send({
+      success: true,
+      message: 'User created',
+    });
+  }
   
-  res.send({
-    success: true,
-  });
 })
 
-async function postSignup(req, res){
-  const results = await dbPool.query(`
+ function postSignup(req, res){
+  const results =  dbPool.query(`
     INSERT INTO users (email, username, password)
     VALUES ($1, $2, $3)
     ON CONFLICT (email) DO NOTHING
     RETURNING id, email, username
   `, [req.body.email, req.body.username, req.body.password])
-  console.log('results: ', results);
+  console.log('results: ', results.rows);
   return results;
 }
 

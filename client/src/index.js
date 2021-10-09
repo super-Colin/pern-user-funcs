@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import { UserProvider } from './Context/UserContext';
 
-import SignUp from './Routes/SignUp';
-import Login from './Routes/Login';
 import App from './App';
+import SignUp from './Routes/SignUp';
+import SignedUp from './Routes/SignedUp';
+import Login from './Routes/Login';
+
 
 
 ReactDOM.render(
@@ -18,6 +20,8 @@ ReactDOM.render(
           <Route path="/" exact component={App} />
 
           <Route path="/signup" component={SignUp} />
+          
+          <Route path="/signedup" component={SignedUp} />
 
           <Route path="/login" component={Login} />
 

@@ -40,7 +40,11 @@ const UserProvider = (props) => {
           password: hashedPw
         })
         console.log(response);
+        if(response.data.success){
+          console.log('Signup Successful');
+        }
       }catch(err){console.log(err);}
+      
     }
 
     const hashPassword = (password) => {
