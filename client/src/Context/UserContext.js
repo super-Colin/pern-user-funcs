@@ -32,19 +32,25 @@ const UserProvider = (props) => {
     }
 
     const attemptSignup = async (email, user, password) => {
-      const hashedPw = hashPassword(password);
-      try{
-        const response = await UserAuth.post('signup', {
+      return sendSignupRequest(email, user, hashPassword(password))
+        .then((successResults) => {
+          console.log( 'success result in context: ', successResults); 
+          if(successResults.data.success === true){
+            console.log('Signup Successful in context');
+          }else{
+            console.log('Signup Failed in context');
+          }
+          return successResults.data;
+
+        })
+    }
+
+    const sendSignupRequest = async (email, user, hashedPassword) => {
+        return await UserAuth.post('signup', {
           email: email,
           username: user,
-          password: hashedPw
+          password: hashedPassword
         })
-        console.log(response);
-        if(response.data.success){
-          console.log('Signup Successful');
-        }
-      }catch(err){console.log(err);}
-      
     }
 
     const hashPassword = (password) => {

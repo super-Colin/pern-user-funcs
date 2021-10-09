@@ -89,10 +89,7 @@ app.post('/signup', (req, res)=>{
   // some kind of email validation...
 
   // Add user to db
-  // try{
-  //   var results = postSignup(req, res);
-  // }
-  // catch(err){console.log(err)}
+
 
   const results = postSignup(req, res);
   // console.log('results: ', results);
