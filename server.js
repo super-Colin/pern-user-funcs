@@ -89,25 +89,35 @@ app.post('/signup', (req, res)=>{
   // some kind of email validation...
 
   // Add user to db
+  // try{
+  //   var results = postSignup(req, res);
+  // }
+  // catch(err){console.log(err)}
+
   const results = postSignup(req, res);
   // console.log('results: ', results);
 
-  if(results.rows.length === 0){
-    res.send({
-      success: false,
-      message: 'Email already exists'
-    })
-  }else{
-    res.send({
-      success: true,
-      message: 'User created',
-    });
-  }
+  results.then(
+    (results)=>{
+      console.log('results: ', results.rows);
+      if(results.rows.length === 0){
+        res.send({
+          success: false,
+          message: 'Email already exists'
+        })
+      }else{
+        res.send({
+          success: true,
+          message: 'User created',
+        });
+      }
+    }, (err)=>{console.log(err)}
+  )
   
 })
 
- function postSignup(req, res){
-  const results =  dbPool.query(`
+  async function postSignup(req, res){
+  const results = await dbPool.query(`
     INSERT INTO users (email, username, password)
     VALUES ($1, $2, $3)
     ON CONFLICT (email) DO NOTHING

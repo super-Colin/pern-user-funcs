@@ -14,9 +14,6 @@ const UserSignup = () => {
 
   const handleSignup = () => {
     const result = attemptSignup(userName, email, password);
-    // setEmail('');
-    // setUserName('');
-    // setPassword('');
     history.push('/signedup');
   }
 
