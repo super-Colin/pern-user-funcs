@@ -57,32 +57,44 @@ app.get('/',(req, res)=>{
 })
 
 
+
+
+
+// LOGIN
 app.post('/login', (req, res)=>{
   console.log('login req.body: ', req.body);
 
   checkUserLogin(req.body.email, req.body.password)
-
-
-  res.send({
-    success: true,
+  .then(results=>{
+    console.log('check user login results: ', results.rows);
+    if(results.rows.length > 0){
+      res.send({
+        success: true,
+        message: 'login successful',
+        user: results.rows[0].username
+      });
+    }else{
+      res.send({
+        success: false,
+        message: 'Invalid email or password'
+      });
+    }
   });
+
 })
 
 async function checkUserLogin(userEmail, userPassword){
-  dbPool.query(`
-    SELECT FROM USERS WHERE email = $1 AND password = $2;
-  `, [userEmail, userPassword], (err, results)=>{
-    if(err){
-      console.log('checkUserLogin err: ', err);
-      return false;
-    }
-    console.log('checkUserLogin results: ', results);
-    return results;
-  })
+  return dbPool.query(`
+    SELECT * FROM USERS WHERE email = $1 AND password = $2;
+  `, [userEmail, userPassword])
 }
+// /LOGIN
 
 
 
+
+
+// SIGN UP
 app.post('/signup', (req, res)=>{
   console.log('signup req.body: ', req.body);
 
@@ -124,6 +136,7 @@ app.post('/signup', (req, res)=>{
   return results;
 }
 
+// /SIGN UP
 
 
 

@@ -10,14 +10,17 @@ const UserProvider = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState({});
 
-    const attemptLogin = async (user, password) => {
+
+
+    
+    const attemptLogin = async (email,  password) => {
       // Hash password on client side so we don't send password in plain text ever
       const hashedPw = hashPassword(password); 
-      console.log(hashedPw);
-      console.log('~~~~~~~~~~~~~~');
+      // console.log(hashedPw);
+      // console.log('~~~~~~~~~~~~~~');
       try{
         const response = await UserAuth.post('login', {
-          username: user,
+          email: email,
           password: hashedPw
         })
         console.log(response);
@@ -26,10 +29,10 @@ const UserProvider = (props) => {
           setIsLoggedIn(true);
           setUser(user);
         }
-      }catch(err){
-        console.log(err);
-      }
+      }catch(err){console.log(err);}
     }
+
+
 
     const attemptSignup = async (email, user, password) => {
       return sendSignupRequest(email, user, hashPassword(password))
