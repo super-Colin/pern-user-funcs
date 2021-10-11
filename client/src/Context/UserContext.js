@@ -8,9 +8,13 @@ const UserContext = createContext();
 const UserProvider = (props) => {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] = useState({});
+    const [userName, setUserName] = useState('');
 
 
+    const logOut = () => {
+        setIsLoggedIn(false);
+        setUserName('');
+    }
 
     
     const attemptLogin = async (email,  password) => {
@@ -25,9 +29,9 @@ const UserProvider = (props) => {
         })
         console.log(response);
         if(response.data.success === true){
-          console.log('Login Successful');
+          console.log('Login Successful, username:', response.data.username, typeof(response.data.username));
+          setUserName(response.data.username);
           setIsLoggedIn(true);
-          setUser(user);
         }
       }catch(err){console.log(err);}
     }
@@ -64,9 +68,10 @@ const UserProvider = (props) => {
     return (
       <UserContext.Provider value={{
         isLoggedIn,
-        user,
+        userName,
         attemptLogin,
-        attemptSignup
+        attemptSignup,
+        logOut
       }}>
         {props.children}
       </UserContext.Provider>

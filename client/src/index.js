@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import { UserProvider } from './Context/UserContext';
 
-import App from './App';
+import Home from './Routes/Home';
 import SignUp from './Routes/SignUp';
 import SignedUp from './Routes/SignedUp';
 import Login from './Routes/Login';
@@ -17,7 +17,7 @@ ReactDOM.render(
       <BrowserRouter>
         <Switch>
 
-          <Route path="/" exact component={App} />
+          <Route path="/" exact component={Home} />
 
           <Route path="/signup" component={SignUp} />
           

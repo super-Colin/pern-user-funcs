@@ -71,7 +71,7 @@ app.post('/login', (req, res)=>{
       res.send({
         success: true,
         message: 'login successful',
-        user: results.rows[0].username
+        username: results.rows[0].username
       });
     }else{
       res.send({

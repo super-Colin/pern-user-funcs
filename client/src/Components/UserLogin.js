@@ -13,7 +13,7 @@ const UserLogin = () => {
     <div>
       <h1>User Login</h1>
       <input type="text" placeholder="username" value={email} onChange={(e)=>{setEmail(e.target.value)}} />
-      <input type="text" placeholder="password" onChange={(e)=>{setPassword(e.target.value)}} />
+      <input type="text" placeholder="password" value={password} onChange={(e)=>{setPassword(e.target.value)}} />
       <button onClick={() => {
         attemptLogin(email, password);
         setEmail('');
